@@ -1110,15 +1110,23 @@ body.nav-open .burger span { background: #fff; }
 @media (min-width: 640px)  { .doc-grid { grid-template-columns: repeat(3, 1fr); gap: 40px 28px; } }
 @media (min-width: 1024px) { .doc-grid { gap: 48px 36px; } }
 
+.doc-item {
+  display: flex;
+  flex-direction: column;
+}
 .doc-item__fig {
   margin: 0 0 12px;
   overflow: hidden;
   border-radius: 12px;
   position: relative;
+  aspect-ratio: 3 / 4;
+  background: rgba(201,169,110,.06);
 }
 .doc-item__fig img {
-  width: 100%; height: auto;
+  width: 100%; height: 100%;
   display: block;
+  object-fit: cover;
+  object-position: top center;
   transition: transform .5s ease;
   filter: none !important;
   opacity: 1 !important;
@@ -2349,7 +2357,7 @@ body.nav-open .burger span { background: #fff; }
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 16px 12px;
+  padding: 16px 12px calc(16px + env(safe-area-inset-bottom));
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 15px;
