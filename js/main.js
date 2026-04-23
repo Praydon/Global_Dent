@@ -777,31 +777,6 @@
     window.addEventListener('scroll', updateMobileCta, { passive: true });
     window.addEventListener('resize', updateMobileCta, { passive: true });
     updateMobileCta();
-
-    // Pin CTA to visual viewport bottom (fixes iOS Chrome "floating" bug
-    // when the browser chrome collapses/expands on scroll)
-    const vv = window.visualViewport;
-    if (vv) {
-      let rafId = null;
-      function syncCtaToVisualViewport() {
-        const layoutHeight = document.documentElement.clientHeight;
-        const visualBottom = vv.offsetTop + vv.height;
-        const delta = visualBottom - layoutHeight;
-        mobileCta.style.transform = delta ? `translateY(${delta}px)` : '';
-      }
-      function schedule() {
-        if (rafId) return;
-        rafId = requestAnimationFrame(() => {
-          rafId = null;
-          syncCtaToVisualViewport();
-        });
-      }
-      vv.addEventListener('resize', schedule);
-      vv.addEventListener('scroll', schedule);
-      window.addEventListener('scroll', schedule, { passive: true });
-      window.addEventListener('orientationchange', schedule);
-      syncCtaToVisualViewport();
-    }
   }
 
 })();

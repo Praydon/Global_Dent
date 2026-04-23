@@ -2447,7 +2447,8 @@ body.nav-open .burger span { background: #fff; }
    ========================================================================== */
 .mobile-cta {
   position: fixed;
-  bottom: 0; left: 0;
+  left: 0;
+  bottom: 0;
   width: 100%;
   display: flex;
   padding-bottom: env(safe-area-inset-bottom);
@@ -2460,7 +2461,6 @@ body.nav-open .burger span { background: #fff; }
   );
   z-index: 150;
   box-shadow: 0 -4px 20px rgba(0,0,0,.15);
-  will-change: transform;
 }
 .mobile-cta[hidden] { display: none; }
 
