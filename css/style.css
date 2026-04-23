@@ -2409,10 +2409,23 @@ body.nav-open .burger span { background: #fff; }
   bottom: 0; left: 0;
   width: 100%;
   display: flex;
+  padding-bottom: env(safe-area-inset-bottom);
   z-index: 150;
   box-shadow: 0 -4px 20px rgba(0,0,0,.15);
 }
 .mobile-cta[hidden] { display: none; }
+
+.mobile-cta::before,
+.mobile-cta::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 50%;
+  height: env(safe-area-inset-bottom);
+  pointer-events: none;
+}
+.mobile-cta::before { left: 0; background: var(--color-navy); }
+.mobile-cta::after  { right: 0; background: var(--color-primary); }
 
 .mobile-cta__call,
 .mobile-cta__book {
@@ -2421,7 +2434,7 @@ body.nav-open .burger span { background: #fff; }
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 16px 12px calc(16px + env(safe-area-inset-bottom));
+  padding: 16px 12px;
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 15px;
