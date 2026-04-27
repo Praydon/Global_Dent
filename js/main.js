@@ -777,6 +777,35 @@
     window.addEventListener('scroll', updateMobileCta, { passive: true });
     window.addEventListener('resize', updateMobileCta, { passive: true });
     updateMobileCta();
+
+    // Pin CTA to the actual visual viewport bottom on iOS Chrome.
+    // Only react to viewport size changes (when browser chrome finishes
+    // collapsing/expanding) and to scroll-end — this avoids jumpy animation
+    // during the chrome bar transition itself.
+    const vv = window.visualViewport;
+    if (vv) {
+      let lastDelta = 0;
+      let scrollEndTimer = null;
+
+      function syncCtaToVisualViewport() {
+        const layoutH = document.documentElement.clientHeight;
+        const visualBottom = vv.height + vv.offsetTop;
+        const delta = visualBottom - layoutH;
+        if (Math.abs(delta - lastDelta) < 0.5) return;
+        lastDelta = delta;
+        mobileCta.style.transform = delta ? `translateY(${delta}px)` : '';
+      }
+
+      function scheduleSync() {
+        if (scrollEndTimer) clearTimeout(scrollEndTimer);
+        scrollEndTimer = setTimeout(syncCtaToVisualViewport, 120);
+      }
+
+      vv.addEventListener('resize', syncCtaToVisualViewport);
+      window.addEventListener('scroll', scheduleSync, { passive: true });
+      window.addEventListener('orientationchange', syncCtaToVisualViewport);
+      syncCtaToVisualViewport();
+    }
   }
 
 })();
